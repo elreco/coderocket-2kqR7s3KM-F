@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Image Slider</title>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <style>
+    .slide {
+      display: none;
+    }
+    .slide.active {
+      display: block;
+    }
+  </style>
+</head>
+<body class="bg-base-200 flex items-center justify-center min-h-screen">
+  <div class="w-[600px] h-[200px] p-4 relative bg-base-100 rounded-lg shadow-xl">
+    <!-- Slider Container -->
+    <div class="slider-container h-full relative overflow-hidden">
+      <!-- Slides -->
+      <div class="slides h-full">
+        <!-- Slide 1 -->
+        <div class="slide active cursor-pointer h-full" data-id="1">
+          <div class="flex flex-col h-full">
+            <h2 class="text-xl font-bold mb-2">Beautiful Mountains</h2>
+            <div class="flex-1 overflow-hidden rounded-lg">
+              <img src="https://picsum.photos/id/29/600/150" alt="Mountains" class="w-full h-full object-cover">
+            </div>
+          </div>
+        </div>
+        
+        <!-- Slide 2 -->
+        <div class="slide cursor-pointer h-full" data-id="2">
+          <div class="flex flex-col h-full">
+            <h2 class="text-xl font-bold mb-2">Peaceful Ocean</h2>
+            <div class="flex-1 overflow-hidden rounded-lg">
+              <img src="https://picsum.photos/id/26/600/150" alt="Ocean" class="w-full h-full object-cover">
+            </div>
+          </div>
+        </div>
+        
+        <!-- Slide 3 -->
+        <div class="slide cursor-pointer h-full" data-id="3">
+          <div class="flex flex-col h-full">
+            <h2 class="text-xl font-bold mb-2">Forest Adventure</h2>
+            <div class="flex-1 overflow-hidden rounded-lg">
+              <img src="https://picsum.photos/id/15/600/150" alt="Forest" class="w-full h-full object-cover">
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Navigation Arrows -->
+      <button class="btn btn-circle btn-sm absolute left-2 top-1/2 transform -translate-y-1/2 z-10" id="prev-btn">
+        ❮
+      </button>
+      <button class="btn btn-circle btn-sm absolute right-2 top-1/2 transform -translate-y-1/2 z-10" id="next-btn">
+        ❯
+      </button>
+    </div>
+  </div>
+
+  <script>
+    $(document).ready(function() {
+      // Variables
+      const slides = $('.slide');
+      const totalSlides = slides.length;
+      let currentSlide = 0;
+      
+      // Function to show a specific slide
+      function showSlide(index) {
+        // Hide all slides
+        slides.removeClass('active');
+        
+        // Show the current slide
+        $(slides[index]).addClass('active');
+        
+        // Update current slide index
+        currentSlide = index;
+      }
+      
+      // Next slide function
+      function nextSlide() {
+        let nextIndex = currentSlide + 1;
+        if (nextIndex >= totalSlides) {
+          nextIndex = 0;
+        }
+        showSlide(nextIndex);
+      }
+      
+      // Previous slide function
+      function prevSlide() {
+        let prevIndex = currentSlide - 1;
+        if (prevIndex < 0) {
+          prevIndex = totalSlides - 1;
+        }
+        showSlide(prevIndex);
+      }
+      
+      // Event listeners for navigation buttons
+      $('#next-btn').on('click', function(e) {
+        e.preventDefault();
+        nextSlide();
+      });
+      
+      $('#prev-btn').on('click', function(e) {
+        e.preventDefault();
+        prevSlide();
+      });
+      
+      // Click on slide
+      $('.slide').on('click', function() {
+        const slideId = $(this).data('id');
+        alert('You clicked on slide #' + slideId);
+        // You can add custom functionality here, like opening a modal or navigating to a page
+      });
+      
+      // Initialize the first slide
+      showSlide(0);
+    });
+  </script>
+</body>
+</html>
